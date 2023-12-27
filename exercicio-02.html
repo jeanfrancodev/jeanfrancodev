@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exercicio-02</title>
+  </head>
+  <body>
+    <script>
+      // - Cria uma ligação à api https://cat-fact.herokuapp.com/facts/ com os 2 métodos que falamos: XMLHTTPRequest e
+      // fetch;
+      fetch('https://cat-fact.herokuapp.com/facts/')
+        .then(response => {
+          return response.json()
+        })
+        .then(responseJson => {
+          responseJson
+        })
+        .catch(error => {
+          console.log(error)
+        })
+
+      const request = new XMLHttpRequest()
+      request.open('GET', 'https://cat-fact.herokuapp.com/facts/')
+      request.responseType = 'json'
+      request.send()
+
+      // - Façam a resolução da ligação à API com uma promise, e façam resolve com o que é obtido pela API.
+      const promise = new Promise(function (resolve, reject) {
+        request.onload = () => {
+          resolve(console.log(request.response))
+        }
+        request.onerror = () => {
+          reject('erro')
+        }
+      })
+      // - Façam uma função que faça console.log de todas as frases que estão na propriedade text
+      async function getAllTexts() {
+        try {
+          const response = await fetch('https://cat-fact.herokuapp.com/facts/')
+          const responseJson = await response.json()
+          responseJson.forEach(allText => {
+            console.log(`text: ${allText.text}`)
+          })
+        } catch (error) {
+          console.log('🚀 ~ error:', error)
+          console.log('deu erro')
+        }
+      }
+      getAllTexts()
+    </script>
+  </body>
+</html>
